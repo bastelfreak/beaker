@@ -234,6 +234,10 @@ module Beaker
             RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key
             RUN sed -ri 's/^#?UsePAM .*/UsePAM no/' /etc/ssh/sshd_config
           EOF
+        when /archlinux/
+          dockerfile += <<-EOF
+            RUN pacman -S --refresh --noconfirm openssh systemd
+          EOF
         else
           # TODO add more platform steps here
           raise "platform #{host['platform']} not yet supported on docker"
