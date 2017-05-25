@@ -237,7 +237,7 @@ module Beaker
         when /archlinux/
           dockerfile += <<-EOF
             RUN pacman -S --refresh --noconfirm openssh systemd
-            RUN systemctl start sshd
+            RUN /usr/bin/sshd -D
           EOF
         else
           # TODO add more platform steps here
@@ -272,7 +272,7 @@ module Beaker
 
         # How to start a sshd on port 22.  May be an init for more supervision
         # Ensure that the ssh server can be restarted (done from set_env) and container keeps running
-        cmd = host['docker_cmd'] || ["sh","-c","systemctl start sshd"]
+        # cmd = host['docker_cmd'] || ["sh","-c","#{service} #{service_name} start ; tail -f /dev/null"]
         dockerfile += <<-EOF
           EXPOSE 22
           CMD #{cmd}
