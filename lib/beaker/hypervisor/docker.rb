@@ -237,6 +237,7 @@ module Beaker
         when /archlinux/
           dockerfile += <<-EOF
             RUN pacman -S --refresh --noconfirm openssh systemd
+            RUN systemctl start sshd
           EOF
         else
           # TODO add more platform steps here
