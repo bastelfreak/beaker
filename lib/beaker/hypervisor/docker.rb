@@ -237,7 +237,6 @@ module Beaker
         when /archlinux/
           dockerfile += <<-EOF
             RUN pacman -S --refresh --noconfirm openssh systemd
-            RUN /usr/bin/sshd -D
           EOF
         else
           # TODO add more platform steps here
@@ -275,7 +274,7 @@ module Beaker
         # cmd = host['docker_cmd'] || ["sh","-c","#{service} #{service_name} start ; tail -f /dev/null"]
         dockerfile += <<-EOF
           EXPOSE 22
-          CMD #{cmd}
+          CMD /usr/bin/sshd
         EOF
 
       end
